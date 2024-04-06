@@ -23,7 +23,11 @@ print(products)
 for p in products:
 	print(p[0], '的價格是', p[1])
 
-# 字串可以做 + 和 *
-with open('products.csv', 'w') as f:
+# str 可以做 + 和 *，int 不可以
+# 寫入一個csv檔
+# 解決程式編碼問題(encoding)
+with open('products.csv', 'w', encoding = 'utf-8') as f:
+	# 加入欄位
+	f.write('商品,價格\n')
 	for p in products:
 		f.write(p[0] + ',' + p[1] + '\n')
