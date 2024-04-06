@@ -18,3 +18,7 @@ print(products)
 
 # 存取二維清單
 # print(products[0][0])
+
+# 列出每個東西
+for p in products:
+	print(p[0], '的價格是', p[1])
