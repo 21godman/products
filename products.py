@@ -22,3 +22,8 @@ print(products)
 # 列出每個東西
 for p in products:
 	print(p[0], '的價格是', p[1])
+
+# 字串可以做 + 和 *
+with open('products.csv', 'w') as f:
+	for p in products:
+		f.write(p[0] + ',' + p[1] + '\n')
