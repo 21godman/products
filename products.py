@@ -1,11 +1,9 @@
-# 檢查檔案是否存在
 import os # operating system
 
-products = []
-if os.path.isfile('products.csv'):
-	print('YA! 找到檔案了!')
-	# 讀取檔案
-	with open('products.csv', 'r', encoding = 'utf-8') as f:
+# 讀取檔案
+def read_file(filename):
+	with open(filename, 'r', encoding = 'utf-8') as f:
+		products = []
 		for line in f:
 			# 跳過 header
 			if '商品,價格' in line: 
@@ -14,42 +12,54 @@ if os.path.isfile('products.csv'):
 			# split 完會變清單 list
 			name, price = line.strip().split(',')	
 			products.append([name, price])
+		return products
+
+# 輸入清單內容
+def user_input(products):
+	while True:
+		name = input('請輸入商品名稱: ')
+		if name == 'q':
+			break
+		price = input('請輸入商品價格: ')
+
+		# 建立二維清單
+		# p = []
+		# p.append(name)
+		# p.append(price)
+
+		# 簡易寫法
+		# p = [name, price]
+		# products.append(p)
+
+		#更簡易寫法
+		products.append([name, price])
 	print(products)
-else:
-	print('找不到檔案...')
-
-# 輸入新的清單內容
-while True:
-	name = input('請輸入商品名稱: ')
-	if name == 'q':
-		break
-	price = input('請輸入商品價格: ')
-
-	# 建立二維清單
-	# p = []
-	# p.append(name)
-	# p.append(price)
-
-	# 簡易寫法
-	# p = [name, price]
-	# products.append(p)
-
-	#更簡易寫法
-	products.append([name, price])
-print(products)
-
-# 存取二維清單
-# print(products[0][0])
+	return products
 
 # 列出每個東西
-for p in products:
-	print(p[0], '的價格是', p[1])
+def print_products(products):
+	for p in products:
+		print(p[0], '的價格是', p[1])
 
 # 寫入檔案
-# str 可以做 + 和 *，int 不可以
-# 解決程式編碼問題(encoding)
-with open('products.csv', 'w', encoding = 'utf-8') as f:
-	# 加入欄位
-	f.write('商品,價格\n')
-	for p in products:
-		f.write(p[0] + ',' + p[1] + '\n')
+def write_file(filename, products):
+	with open(filename, 'w', encoding = 'utf-8') as f: # 解決程式編碼問題(encoding)
+		# 加入欄位
+		f.write('商品,價格\n')
+		for p in products:
+			f.write(p[0] + ',' + p[1] + '\n') # str 可以做 + 和 *，int 不可以
+
+
+def main():
+	filename = 'products.csv'
+	if os.path.isfile(filename): # 檢查檔案是否存在
+		print('YA! 找到檔案了!')
+		products = read_file(filename)
+	else:
+		print('找不到檔案...')
+
+	products = user_input(products)
+	print_products(products)
+	write_file(filename, products)
+
+main()
